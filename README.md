@@ -37,6 +37,11 @@ coffeethon.py --clear
 coffeethon.py --watch
 ```
 
+## Tips :
+
+- Add a cron job to clear the data everyday :
+`0 0 * * * python coffeethon.py -c`
+
 ## TODO :
 
 - Add plural only if necessary
