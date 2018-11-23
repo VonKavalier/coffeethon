@@ -41,3 +41,8 @@ coffeethon.py --watch
 
 - Add a cron job to clear the data everyday :
 `0 0 * * * python coffeethon.py -c`
+
+## TODO :
+
+- Add plural only if necessary
+- Use `$COFFEETHON_FILEPATH` environnement variable and initialize it in `/tmp/` if isn't set. (or stuff like that. I'm just thinking)
