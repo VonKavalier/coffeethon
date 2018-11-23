@@ -8,7 +8,17 @@ import getopt
 __author__ = "Tom Celestin"
 __copyright__ = "Copyright 2018, Planet Earth"
 
-
+def printCups(operation, amount, isWatch):
+    if isWatch == False:
+        if amount == 1:
+            print("You " + operation + " " + str(amount) + " cup of coffee")
+        else:
+            print("You " + operation + " " + str(amount) + " cups of coffee")
+    else:
+        if amount == 1:
+            print("Today you drank " + str(amount) + " cup of coffee")
+        else:
+            print("Today you drank " + str(amount) + " cups of coffee")
 def manage_file(filename, sum, number):
     """Change value of the coffee counter."""
     number = int(number)
@@ -16,13 +26,10 @@ def manage_file(filename, sum, number):
     current = int(file.read())
     if sum is True:
         current += number
-        if number == 1:
-            print("You added " + str(number) + " cup of coffee")
-        else:
-            print("You added " + str(number) + " cups of coffee")
+        printCups("added", number, False)
     else:
         current -= number
-        print("You removed " + str(number) + " cups of coffee")
+        printCups("removed", number, False)
     file.close()
     file = open(filename, "w")
     file.write(str(current))
@@ -40,10 +47,7 @@ def watch(filename):
     """Display the counter in cool way."""
     file = open(filename, "r")
     current = file.read()
-    if int(current) == 1:
-        print("Today you drank " + current + " cup of coffee")
-    else:
-        print("Today you drank " + current + " cups of coffee")
+    printCups("", int(current), True)
     for i in range(int(current)):
         print("☕️", end=" ")
     file.close()
@@ -51,7 +55,7 @@ def watch(filename):
 
 def main(argv):
     """Main function."""
-    filename = "./coffeethon.txt"
+    filename = "/tmp/coffeethon.txt"
 
     try:
         file = open(filename)
