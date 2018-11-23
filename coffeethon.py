@@ -8,17 +8,23 @@ import getopt
 __author__ = "Tom Celestin"
 __copyright__ = "Copyright 2018, Planet Earth"
 
-def printCups(operation, amount, isWatch):
-    if isWatch == False:
-        if amount == 1:
-            print("You " + operation + " " + str(amount) + " cup of coffee")
-        else:
-            print("You " + operation + " " + str(amount) + " cups of coffee")
+
+def print_cups(watch, amount, operation=""):
+    """Display coffee values"""
+    message = ""
+    if not watch:
+        message = "You " + operation + " "
     else:
-        if amount == 1:
-            print("Today you drank " + str(amount) + " cup of coffee")
-        else:
-            print("Today you drank " + str(amount) + " cups of coffee")
+        message = "Today you drank "
+
+    message += str(amount) + " cups of coffee"
+
+    if amount < 2:
+        message = message.replace("cups", "cup")
+
+    print(message)
+
+
 def manage_file(filename, sum, number):
     """Change value of the coffee counter."""
     number = int(number)
@@ -26,10 +32,10 @@ def manage_file(filename, sum, number):
     current = int(file.read())
     if sum is True:
         current += number
-        printCups("added", number, False)
+        print_cups(False, number, "added")
     else:
         current -= number
-        printCups("removed", number, False)
+        print_cups(False, number, "removed")
     file.close()
     file = open(filename, "w")
     file.write(str(current))
@@ -46,9 +52,9 @@ def clear(filename):
 def watch(filename):
     """Display the counter in cool way."""
     file = open(filename, "r")
-    current = file.read()
-    printCups("", int(current), True)
-    for i in range(int(current)):
+    current = int(file.read())
+    print_cups(True, current)
+    for i in range(current):
         print("☕️", end=" ")
     file.close()
 
