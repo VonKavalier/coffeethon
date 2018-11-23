@@ -5,7 +5,7 @@
 import sys
 import getopt
 
-__author__ = "Von"
+__author__ = "Tom Celestin"
 __copyright__ = "Copyright 2018, Planet Earth"
 
 
@@ -16,8 +16,10 @@ def manage_file(filename, sum, number):
     current = int(file.read())
     if sum is True:
         current += number
+        print("You added " + str(number) + " cups of coffee")
     else:
         current -= number
+        print("You removed " + str(number) + " cups of coffee")
     file.close()
     file = open(filename, "w")
     file.write(str(current))
