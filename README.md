@@ -44,5 +44,8 @@ coffeethon.py --watch
 
 ## TODO :
 
-- Add plural only if necessary
 - Use `$COFFEETHON_FILEPATH` environnement variable and initialize it in `/tmp/` if isn't set. (or stuff like that. I'm just thinking)
+
+## Contributors :
+
+- [Tunas1337](https://github.com/Tunas1337)
