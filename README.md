@@ -6,7 +6,7 @@ Little script to keep count of how many coffees drank during the day
 ```
 # Add 1 coffee
 $ ./coffeethon.py -a
-You added 1 cups of coffee
+You added 1 cup of coffee
 ```
 ```
 # Add more
@@ -41,7 +41,3 @@ coffeethon.py --watch
 
 - Add a cron job to clear the data everyday :
 `0 0 * * * python coffeethon.py -c`
-
-## TODO :
-
-- Add plural only if necessary

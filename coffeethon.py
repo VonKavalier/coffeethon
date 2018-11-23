@@ -16,7 +16,10 @@ def manage_file(filename, sum, number):
     current = int(file.read())
     if sum is True:
         current += number
-        print("You added " + str(number) + " cups of coffee")
+        if number == 1:
+            print("You added " + str(number) + " cup of coffee")
+        else:
+            print("You added " + str(number) + " cups of coffee")
     else:
         current -= number
         print("You removed " + str(number) + " cups of coffee")
@@ -37,7 +40,10 @@ def watch(filename):
     """Display the counter in cool way."""
     file = open(filename, "r")
     current = file.read()
-    print("Today you drank " + current + " cups of coffee")
+    if int(current) == 1:
+        print("Today you drank " + current + " cup of coffee")
+    else:
+        print("Today you drank " + current + " cups of coffee")
     for i in range(int(current)):
         print("☕️", end=" ")
     file.close()
@@ -45,7 +51,7 @@ def watch(filename):
 
 def main(argv):
     """Main function."""
-    filename = "/tmp/coffeethon.txt"
+    filename = "./coffeethon.txt"
 
     try:
         file = open(filename)
