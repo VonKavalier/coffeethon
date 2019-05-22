@@ -4,6 +4,7 @@
 
 import sys
 import getopt
+from datetime import datetime
 
 __author__ = "Tom Celestin"
 __copyright__ = "Copyright 2018, Planet Earth"
@@ -25,20 +26,44 @@ def print_cups(watch, amount, operation=""):
     print(message)
 
 
-def manage_file(filename, sum, number):
+def manage_main_file(filename, sum, number):
     """Change value of the coffee counter."""
+    if not number.isdigit():
+        print("Please enter a valid number")
+        return False
+
     number = int(number)
+
     file = open(filename, "r")
     current = int(file.read())
-    if sum is True:
-        current += number
-        print_cups(False, number, "added")
-    else:
+
+    if sum is False and number > current:
+        print("You drank less than this !")
+        return False
+
+    if sum is False:
         current -= number
         print_cups(False, number, "removed")
+    else:
+        current += number
+        print_cups(False, number, "added")
+
     file.close()
     file = open(filename, "w")
     file.write(str(current))
+    file.close()
+
+
+def manage_stats_file(filename, number):
+    """Change value of the coffee counter."""
+    file = open(filename, "r")
+    date = datetime.now().date()
+    timestamp = date.strftime("%Y%m%d")
+    current = timestamp + ":" + number
+    file.close()
+    file = open(filename, "a")
+    file.write(str(current))
+    file.write("\n")
     file.close()
 
 
@@ -61,15 +86,20 @@ def watch(filename):
 
 def main(argv):
     """Main function."""
-    filename = "/tmp/coffeethon.txt"
-
+    main_filename = "/tmp/coffeethon.txt"
+    stats_filename = "./logs/stats.txt"
     try:
-        file = open(filename)
+        main_file = open(main_filename)
+        stats_file = open(stats_filename)
     except IOError:
-        # If not exists, create the file
-        file = open(filename, 'w+')
-        file.write("0")
-        file.close()
+        # If not exists, create the files
+        main_file = open(main_filename, 'w+')
+        main_file.write("0")
+        main_file.close()
+
+        stats_file = open(stats_filename, 'w+')
+        stats_file.write("")
+        stats_file.close()
     try:
         opts, args = getopt.getopt(
             argv,
@@ -99,13 +129,15 @@ def main(argv):
             print('coffeethon.py --watch')
             sys.exit()
         elif opt in ("-a", "--add"):
-            manage_file(filename, True, number)
+            manage_main_file(main_filename, True, number)
+            manage_stats_file(stats_filename, number)
         elif opt in ("-r", "--remove"):
-            manage_file(filename, False, number)
+            manage_main_file(main_filename, False, number)
+            # manage_stats_file(stats_filename, False, number)
         elif opt in ("-c", "--clear"):
-            clear(filename)
+            clear(main_filename)
         elif opt in ("-w", "--watch"):
-            watch(filename)
+            watch(main_filename)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
