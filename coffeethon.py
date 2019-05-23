@@ -119,7 +119,7 @@ def main(argv):
         print('coffeethon.py --watch')
         sys.exit(2)
     for opt, arg in opts:
-        number = 1
+        number = "1"
         if len(sys.argv) > 2:
             number = sys.argv[2]
         if opt == '-h':
